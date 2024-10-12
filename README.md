@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Tic Tac Toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## App 
 
-## Available Scripts
+A gyökérkomponens. 
+Itt hozzuk létre a program állapotát leíró state-ket. 
+Itt kezeljük le a kattintás eseményt. 
 
-In the project directory, you can run:
+### A program állapota
 
-### `npm start`
+Reactban a program állapotát state-ek segítségével kezeljük. A statek olyan változók, amelyek leírják a program aktuális állapotát, és a  React automatikusan frissíti az oldal azon részét, amely a state-ben megahtározott változóktól függ.  A state-k beállítása a useState hokkal történik. 
+A useState hook egy speciális függvény, visszatérési értéke egy lista, melynek két eleme van: a változó és a változót beállító függvény. 
+A változó értéke a továbbiakban közvetlenül nem, csak ezen függvényen keresztül módosítható.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Két state-et használ a program: 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    const [lista,setLista] = useState(["X","X"," ","O"," "," "," "," ","O"])
+    const [lepes,setLepes] = useState(0)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### katt függvény
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ez a metódus kezeli le az egyes elemekre való kattintás eseményt. 
+Beállítja a state-eket az állapotnak megfelelően. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    function katt(adat){
+        console.log("app-ban",adat)
+        //lista[adat]="X" így nem változtathatjuk meg a state értékét
+        //csak a setterén/beállítófüggvényén keresztül. 
+        //1. készíts egy másolatot a változóról. 
+        //2. változtasd meg az értékét
+        //3. beállítóvüggvényen keresztül változtasd meg az eredeti változót.
+        
+        const sl=[...lista]
+        if (lepes%2==0){
+        sl[adat]="X"
+        }else{
+        sl[adat]="O"
+        }    
+        setLista([...sl]) //értékadás történi a háttérben: lista=sl
 
-### `npm run eject`
+        let slepes=lepes+1
+        setLepes(slepes)
+        //setLepes(lepes+1) ez jó
+        //setLepes(lepes+=1) - ezt nem tehetem meg)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## JatekTer komponens
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Végigiterál a listán és létrehozza a 9 Elem komponenst. 
+A reactben a props segítségével adunk át adatokat a szülőkomponenstől a gyerek komponensnek. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+props-ok: 
+1. lista - a program állapotát jelképező lista. 
+2. katt - Az a metódus, ami majd az elemre való kattintást lekezeli. Ezt nem itt használjuk fel, hanem majd az Elem komponensben, a JatekTer csak "átvezeti" az információt. 
 
-## Learn More
+##  Elem komponens
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Feladata egyetlen DIV megjelenítése, amire kattinthatunk, és amibe belekerül majd a megfelelő jel.
+props-ok: 
+1. adat - a konkrét jelet jelenti, értéke a listából jön. 
+2. index - az adott komponens helye a listában.  
+3. katt - a főkomponens metódusa, ezt kell meghívni kattintáskor. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
