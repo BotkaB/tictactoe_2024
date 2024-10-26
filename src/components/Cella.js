@@ -5,7 +5,7 @@ import { KattContext } from '../context/KattContext'
 function Cella(props) {
 
   /* itt kell használni a contextr katt fvt*/
-const katt=useContext(KattContext)
+const {katt}=useContext(KattContext)
 
   function kattintas(){
    
