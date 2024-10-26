@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Cella.css'
+import { KattContext } from '../context/KattContext'
 
 function Cella(props) {
 
-  function katt(){
-    console.log("katt", props.index)
-    props.katt(props.index)
+  /* itt kell használni a contextr katt fvt*/
+const katt=useContext(KattContext)
+
+  function kattintas(){
+   
+    katt(props.index)
   }
 
   return (
-    <div className='cella' onClick={()=>{katt()}}>
+    <div className='cella' onClick={()=>{kattintas()}}>
         {props.jel}
     </div>
   )
